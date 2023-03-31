@@ -34,11 +34,12 @@ const ProductCard = ({product}) => {
             toast({
                 description: "This item is already in your cart. Go to your cart to change the amount.",
                 status: "error",
-                isClosable: true
+                isClosable: true,
+                duration: 4000
             })
         } else {
             dispatch(addCartItem(id, 1))
-            toast({description: "Item has been added", status: 'success', isClosable: true})
+            toast({description: "Item has been added", status: 'success', isClosable: true, duration: 2000})
         }
     }
 

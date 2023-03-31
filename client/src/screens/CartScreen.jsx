@@ -2,6 +2,7 @@ import {Box, Flex, Heading, HStack, Link, Stack, useColorModeValue, Spinner, Ale
 import { useSelector } from 'react-redux';
 import { Link as ReactLink } from 'react-router-dom'
 import CartItem from '../components/CartItem'
+import CartOrderSummary from '../components/CartOrderSummary';
 
 const CartScreen = () => {
     const continueShoppingColor = useColorModeValue('gray.800', 'gray.400');
@@ -25,7 +26,7 @@ const CartScreen = () => {
             <AlertDescription>{error}</AlertDescription>
         </Alert>) 
         
-        : CartScreen.lenght <= 0 ? (
+        : cart.length <= 0 ? (
             <Alert status='warning'>
                 <AlertIcon />
                 <AlertTitle>Your cart is empty</AlertTitle>
@@ -44,14 +45,14 @@ const CartScreen = () => {
                         </Heading>
 
                         <Stack spacing='6'>
-                            {cart.map((cartItem) => {
+                            {cart.map((cartItem) => (
                                 <CartItem key={cartItem.id} cartItem={cartItem}/>
-                            })}
+                            ))}
                         </Stack>
                     </Stack>
 
                     <Flex direction='column' align='center' flex='1'>
-                        {/* ORDERSUMMARY */}
+                        <CartOrderSummary />
                         <HStack mt='6' fontWeight='semibold'>
                             <p>or</p>
                             <Link as={ReactLink} to='/products' color={continueShoppingColor}>Continue shopping!</Link>
