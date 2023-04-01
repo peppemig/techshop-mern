@@ -59,8 +59,10 @@ const ProductCard = ({product}) => {
             {product.productIsNew && <Circle size='10px' position='absolute' top='2' right='2' bg='green.300'/>}
 
             {product.stock <= 0 && <Circle size='10px' position='absolute' top='2' right='2' bg='red.300'/>}
-
-            <Image src={product.image} alt={product.name} roundedTop='lg'/>
+            
+            <Link as={ReactLink} to={`/product/${product._id}`}>
+                <Image src={product.image} alt={product.name} roundedTop='lg'/>
+            </Link>
 
             <Box flex='1' maxH='5' alignItems='baseline'>
                 {product.stock <= 0 && (

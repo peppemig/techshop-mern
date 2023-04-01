@@ -53,7 +53,12 @@ const ProductScreen = () => {
             </Alert>
         ) : product && (
             <Box maxW={{base: '3xl', lg: '5xl'}} mx='auto' px={{base: '4', md: '8', lg: '12'}} py={{base: '6', md: '8', lg: '12'}}>
-                <Stack direction={{base: 'column', lg: 'row'}} align={{lg: 'flex-start'}}>
+                <Stack direction={{base: 'column', lg: 'row'}} align={{lg: 'flex-start'}} alignItems='center'>
+
+                                        {/* FLEX 1 - RIGHT */}
+                                        <Flex  direction='column' align='center' flex='1' overflow='hidden'>
+                        <Image fit='cover' h='300px' w='300px' src={product.image} alt={product.name} rounded='xl'/>
+                    </Flex>
 
                     {/* FLEX 1.5 - LEFT */}
                     <Stack pr={{base: '0', md: '12'}} spacing={{base: '8', md: '4'}} flex='1.5' mb={{base: '12', md: 'none'}}>
@@ -99,18 +104,15 @@ const ProductScreen = () => {
                         </Stack>
                     </Stack>
 
-                    {/* FLEX 1 - RIGHT */}
-                    <Flex direction='column' align='center' flex='1' _dark={{bg: 'gray.900'}}>
-                        <Image mb='30px' src={product.image} alt={product.name}/>
-                    </Flex>
+
                 </Stack>
 
                 {/* REVIEWS */}
-                <Stack>
+                <Stack mt='5'>
                     <Text fontSize='xl' fontWeight='bold'>Reviews</Text>
                     <SimpleGrid minChildWidth='300px' spacingX='40px' spacingY='20px'>
                         {product.reviews.map((review) => (
-                            <Box key={review._id}>
+                            <Box key={review._id} border='1px' p='3' rounded='md'>
                                 <Flex spacing='2px' alignItems='center'>
                                     <StarIcon color='orange.500'/>
                                     <StarIcon color={review.rating >= 2 ? 'orange.500' : 'grey.200'}/>

@@ -33,7 +33,7 @@ const ProductsScreen = () => {
 
           products.map((product) => (
               <WrapItem key={product._id} className='grow'>
-                  <Center w='250px' h='550px'>
+                  <Center w='250px' h='500px'>
                       <ProductCard product={product}/>
                   </Center>
               </WrapItem>

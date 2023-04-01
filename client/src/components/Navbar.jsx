@@ -8,7 +8,6 @@ import CartWidget from './CartWidget'
 
 const links = [
     {linkName: 'Products', path: '/products'},
-    {linkName: 'Shopping Cart', path: '/cart'},
 ]
 
 const NavLink = ({path, children}) => {
@@ -23,7 +22,7 @@ const Navbar = () => {
     const [openCart, setOpenCart] = useState(false)
 
   return (
-    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} h={16} position='sticky' top='0' zIndex='999'>
+    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} position='sticky' top='0' zIndex='999'>
         <Flex h={16} alignItems='center' justifyContent='space-between'>
             {/* MOBILE HAMBURGER/CLOSE ICON */}
             <IconButton size='md' icon={isOpen ? <CloseIcon/> : <HamburgerIcon/>} display={{md: 'none'}} onClick={isOpen ? onClose : onOpen}/>
@@ -60,7 +59,7 @@ const Navbar = () => {
         
         {/* MOBILE HAMBURGER MENU */}
         {isOpen ? (
-            <Box pb={4} display={{md: 'none'}}>
+            <Box pb={4} display={{md: 'none'}} w='100%'>
                 <Stack as='nav' spacing={4}>
                     {links.map(link => (
                         <NavLink key={link.linkName} path={link.path}>{link.linkName}</NavLink>
