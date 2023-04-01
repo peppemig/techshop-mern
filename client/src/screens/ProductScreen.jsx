@@ -4,7 +4,7 @@ import {MinusIcon, StarIcon, SmallAddIcon} from '@chakra-ui/icons'
 import {BiPackage, BiCheckShield, BiSupport} from 'react-icons/bi'
 import {useDispatch, useSelector} from 'react-redux'
 import {getProduct} from '../redux/actions/productActions'
-import {addCartitem} from '../redux/actions/cartActions'
+import {addCartItem} from '../redux/actions/cartActions'
 import { useEffect, useState } from 'react'
 
 const ProductScreen = () => {
@@ -33,6 +33,11 @@ const ProductScreen = () => {
         }
     }
 
+    const addItem = () => {
+        dispatch(addCartItem(product._id, amount))
+        toast({description: "Item has been added", status: "success", isClosable: "true", duration: "1500"})
+    }
+
 
   return (
     <Wrap spacing='30px' justify='center' minH='100vh'>
@@ -49,8 +54,11 @@ const ProductScreen = () => {
         ) : product && (
             <Box maxW={{base: '3xl', lg: '5xl'}} mx='auto' px={{base: '4', md: '8', lg: '12'}} py={{base: '6', md: '8', lg: '12'}}>
                 <Stack direction={{base: 'column', lg: 'row'}} align={{lg: 'flex-start'}}>
+
+                    {/* FLEX 1.5 - LEFT */}
                     <Stack pr={{base: '0', md: '12'}} spacing={{base: '8', md: '4'}} flex='1.5' mb={{base: '12', md: 'none'}}>
                         {product.productIsNew && (<Badge rounded='full' w='40px' fontSize='0.8em' colorScheme='green'>New</Badge>)}
+                        {product.stock === 0 && (<Badge rounded='full' w='70px' fontSize='0.8em' colorScheme='red'>Sold out</Badge>)}
                         <Heading fontSize='2xl' fontWeight='extrabold'>{product.name}</Heading>
                         <Stack spacing='5'>
                             <Box>
@@ -73,9 +81,53 @@ const ProductScreen = () => {
                                 <Text mx='30px'>{amount}</Text>
                                 <Button onClick={() => changeAmount('plus')} isDisabled={amount >= product.stock}><SmallAddIcon w='20px' h='25px'/></Button>
                             </Flex>
+                            <Button colorScheme={product.stock === 0 ? 'red' : 'orange'} onClick={() => addItem()} isDisabled={product.stock === 0}>{product.stock === 0 ? 'Item is currently out of stock' : 'Add to cart'}</Button>
+                            <Stack w='270px'>
+                                <Flex alignItems='center'>
+                                    <BiPackage size='20px'/>
+                                    <Text fontWeight='medium' fontSize='sm' ml='2'>Free shipping if order is above €1000</Text>
+                                </Flex>
+                                <Flex alignItems='center'>
+                                    <BiCheckShield size='20px'/>
+                                    <Text fontWeight='medium' fontSize='sm' ml='2'>2 year extended warranty</Text>
+                                </Flex>
+                                <Flex alignItems='center'>
+                                    <BiSupport size='20px'/>
+                                    <Text fontWeight='medium' fontSize='sm' ml='2'>We're here for you 24/7</Text>
+                                </Flex>
+                            </Stack>
                         </Stack>
                     </Stack>
+
+                    {/* FLEX 1 - RIGHT */}
+                    <Flex direction='column' align='center' flex='1' _dark={{bg: 'gray.900'}}>
+                        <Image mb='30px' src={product.image} alt={product.name}/>
+                    </Flex>
                 </Stack>
+
+                {/* REVIEWS */}
+                <Stack>
+                    <Text fontSize='xl' fontWeight='bold'>Reviews</Text>
+                    <SimpleGrid minChildWidth='300px' spacingX='40px' spacingY='20px'>
+                        {product.reviews.map((review) => (
+                            <Box key={review._id}>
+                                <Flex spacing='2px' alignItems='center'>
+                                    <StarIcon color='orange.500'/>
+                                    <StarIcon color={review.rating >= 2 ? 'orange.500' : 'grey.200'}/>
+                                    <StarIcon color={review.rating >= 3 ? 'orange.500' : 'grey.200'}/>
+                                    <StarIcon color={review.rating >= 4 ? 'orange.500' : 'grey.200'}/>
+                                    <StarIcon color={review.rating >= 5 ? 'orange.500' : 'grey.200'}/>
+                                    <Text fontWeight='semibold' ml='4px'>
+                                        {review.title && review.title}
+                                    </Text>
+                                </Flex>
+                                <Box py='12px'>{review.comment}</Box>
+                                <Text fontSize='sm' color='gray.400'> by {review.name}, {new Date(review.createdAt).toDateString()}</Text>
+                            </Box>
+                        ))}
+                    </SimpleGrid>
+                </Stack>
+
             </Box>
         )}
     </Wrap>
