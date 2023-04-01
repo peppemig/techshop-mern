@@ -70,6 +70,7 @@ const Navbar = () => {
             </Box>
         ) : null}
 
+        {/* CART WIDGET */}
         {openCart &&
             <CartWidget open={openCart}/>
         }
