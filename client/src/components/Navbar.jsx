@@ -2,6 +2,9 @@ import { Box, Flex, HStack, Link, IconButton, Icon, Text, useDisclosure, Button,
 import { Link as ReactLink } from 'react-router-dom'
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { GiTechnoHeart } from 'react-icons/gi'
+import {AiOutlineShoppingCart} from 'react-icons/ai'
+import { useState } from 'react'
+import CartWidget from './CartWidget'
 
 const links = [
     {linkName: 'Products', path: '/products'},
@@ -17,9 +20,10 @@ const NavLink = ({path, children}) => {
 const Navbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { colorMode, toggleColorMode } = useColorMode()
+    const [openCart, setOpenCart] = useState(false)
 
   return (
-    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} h={16} position='sticky' top='0' zIndex='999'>
         <Flex h={16} alignItems='center' justifyContent='space-between'>
             {/* MOBILE HAMBURGER/CLOSE ICON */}
             <IconButton size='md' icon={isOpen ? <CloseIcon/> : <HamburgerIcon/>} display={{md: 'none'}} onClick={isOpen ? onClose : onOpen}/>
@@ -44,6 +48,10 @@ const Navbar = () => {
                     <Icon as={colorMode === 'light' ? MoonIcon : SunIcon} alignSelf='center' onClick={() => toggleColorMode()}/>
                 </NavLink>
 
+                <NavLink>
+                    <AiOutlineShoppingCart size={22} color={colorMode === 'light' ? 'black' : 'white'} onClick={() => setOpenCart(!openCart)}/>
+                </NavLink>
+
                 <Button to='/login' as={ReactLink} p={2} fontSize='sm' fontWeight={400} variant='_link'>Sign In</Button>
                 <Button to='/registration' as={ReactLink} m={2} fontSize='sm' fontWeight={400} _hover={{bg: 'orange.400'}} bg='orange.500' color='white' display={{base:'none', md:'inline-flex'}}>Sign Up</Button>
             </Flex>
@@ -62,7 +70,12 @@ const Navbar = () => {
             </Box>
         ) : null}
 
+        {openCart &&
+            <CartWidget open={openCart}/>
+        }
+
     </Box>
+    
   )
 }
  
