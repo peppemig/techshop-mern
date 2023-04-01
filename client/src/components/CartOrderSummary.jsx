@@ -29,7 +29,7 @@ const CartOrderSummary = () => {
             <Flex justify='space-between'>
                 <Text fontWeight='medium' color={mode('gray.600','gray.400')}>Shipping</Text>
                 <Text fontWeight='medium'>
-                    {subtotal <= 1000 ? (standardShipping) : (<Badge rounded='full' px='2' fontSize='0.8em' colorScheme='green'>Free</Badge>)}
+                    {subtotal <= 1000 ? ('€' + standardShipping) : (<Badge rounded='full' px='2' fontSize='0.8em' colorScheme='green'>Free</Badge>)}
                 </Text>
             </Flex>
             <Flex justify='space-between' align='center'>

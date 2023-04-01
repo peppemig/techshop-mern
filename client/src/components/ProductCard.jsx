@@ -72,7 +72,7 @@ const ProductCard = ({product}) => {
             </Box>
 
             <Flex mt='1' justifyContent='space-between' alignContent='center'>
-                <Link as={ReactLink} to={`/products/${product._id}`} pt='2' cursor='pointer' textDecoration='none'>
+                <Link as={ReactLink} to={`/product/${product._id}`} pt='2' cursor='pointer' textDecoration='none'>
                     <Box fontSize='2xl' fontWeight='semibold' lineHeight='tight'>{product.name}</Box>
                 </Link>
             </Flex>
@@ -87,7 +87,7 @@ const ProductCard = ({product}) => {
                     {product.price.toFixed(2)}
                 </Box>
                 <Tooltip label='Add to cart' bg='white' placement='top' color='gray.800' fontSize='1.2em'>
-                    <Button onClick={() => addItem(product._id)} variant='ghost' display='flex' disabled={product.stock === 0}>
+                    <Button onClick={() => addItem(product._id)} variant='ghost' display='flex' isDisabled={product.stock === 0}>
                         <Icon as={FiShoppingCart} h='7' w='7' alignSelf='center'/>
                     </Button>
                 </Tooltip>
