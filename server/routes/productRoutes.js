@@ -22,7 +22,32 @@ const getProduct = async (req, res) => {
     }
 }
 
+const getProductsByBrand = async (req, res) => {
+    try {
+        const productsByBrand = await Product.find({brand: req.params.brandName})
+        res.json(productsByBrand)
+    } catch (error) {
+        console.log(`Error: ${error.message}`)
+    }
+}
+
+const getProductsByPrice = async (req, res) => {
+    try {
+        if(req.params.price === ''){
+            const productsByPrice = await Product.find({})
+            res.json(productsByPrice)
+        }else{
+            const productsByPrice = await Product.find({price: {$lte: req.params.price}})
+            res.json(productsByPrice)
+        }
+    } catch (error) {
+        console.log(`Error: ${error.message}`)
+    }
+}
+
 productRoutes.route('/').get(getProducts);
 productRoutes.route('/:id').get(getProduct)
+productRoutes.route('/brand/:brandName').get(getProductsByBrand)
+productRoutes.route('/price/:price').get(getProductsByPrice)
 
 export default productRoutes;
