@@ -45,9 +45,20 @@ const getProductsByPrice = async (req, res) => {
     }
 }
 
+const getProductByQuery = async (req, res) => {
+    try {
+        const {price, brand} = req.query
+        const foundProducts = await Product.find({price: {$lte: price}, brand: brand || null})
+        res.json(foundProducts)
+    } catch (error) {
+        console.log(`Error: ${error.message}`)
+    }
+}
+
 productRoutes.route('/').get(getProducts);
-productRoutes.route('/:id').get(getProduct)
+productRoutes.route('/id/:id').get(getProduct)
 productRoutes.route('/brand/:brandName').get(getProductsByBrand)
 productRoutes.route('/price/:price').get(getProductsByPrice)
+productRoutes.route('/product').get(getProductByQuery)
 
 export default productRoutes;
