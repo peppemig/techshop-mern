@@ -28,9 +28,9 @@ const Navbar = () => {
             <IconButton size='md' icon={isOpen ? <CloseIcon/> : <HamburgerIcon/>} display={{md: 'none'}} onClick={isOpen ? onClose : onOpen}/>
 
             <HStack>
-                <Link as={ReactLink} to='/'>
+                <Link as={ReactLink} to='/' style={{textDecoration: 'none'}} >
                     <Flex alignItems='center'>
-                        <Icon as={GiTechnoHeart} h={6} w={6} color='orange.400'/>
+                        <Icon as={GiTechnoHeart} h={6} w={6} color='orange.400' _hover={{color: 'blue.500'}} />
                         <Text fontWeight='extrabold'>TechShop</Text>
                     </Flex>
                 </Link>

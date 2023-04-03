@@ -1,11 +1,12 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Center, Flex, Spinner, Stack, Wrap, WrapItem, Text, Button, Input, HStack, Select } from '@chakra-ui/react'
 import ProductCard from '../components/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts, getProductsByBrand, getProductsByPrice } from '../redux/actions/productActions'
+import { getProducts, getProductsByBrand, getProductsByPrice, getProductsByQuery } from '../redux/actions/productActions'
 import { useEffect, useState } from 'react'
 
 const ProductsScreen = () => {
   const [priceForFilter, setPriceForFilter] = useState('')
+  const [brandForFilter, setBrandForFilter] = useState('')
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.products)
@@ -25,7 +26,7 @@ const ProductsScreen = () => {
       <Flex direction='column' gap='10px'>
         <Text fontSize='lg' fontWeight='bold'>Filter by brand name:</Text>
         <HStack>
-        <Select width='300px' onChange={(e) => e.target.value === '' ? dispatch(getProducts()) : dispatch(getProductsByBrand(e.target.value))}>
+        <Select width='300px' onChange={(e) => e.target.value === '' ? dispatch(getProducts()) && setBrandForFilter(e.target.value) : dispatch(getProductsByBrand(e.target.value)) && setBrandForFilter(e.target.value)}>
                 <option value=''>All</option>
             {brands.map((brand) => (
                 <option value={brand}>{brand}</option>
@@ -39,7 +40,7 @@ const ProductsScreen = () => {
         <Text fontSize='lg' fontWeight='bold'>Filter by max price:</Text>
         <HStack>
           <Input type='number' placeholder='Insert max price here' onChange={(e) => setPriceForFilter(e.target.value)}/>
-          <Button onClick={priceForFilter !== '' ? () => dispatch(getProductsByPrice(priceForFilter)) : () => dispatch(getProducts())}>Filter</Button>
+          <Button isDisabled={priceForFilter === ''} onClick={brandForFilter === '' ? () => dispatch(getProductsByPrice(priceForFilter)) : () => dispatch(getProductsByQuery(priceForFilter, brandForFilter))}>Filter</Button>
         </HStack>
       </Flex>
 
